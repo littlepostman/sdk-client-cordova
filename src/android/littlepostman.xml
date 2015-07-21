@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<littlepostman>
+    <config key="com.littlepostman.sender_id">xx</config>
+    <config key="com.littlepostman.client_key">yy</config>
+    <config key="com.littlepostman.environment">DEV</config>
+<littlepostman>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.littlepostman.cordova.plugin" version="0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>LittlePostman</name>
+
+  <js-module name="LittlePostman" src="www/LittlePostman.js">
+    <clobbers target="cordova.plugins.LittlePostman" />
+    <runs/>
+  </js-module>
+
+  <platform name="ios">
+    <config-file parent="/*" target="config.xml">
+      <feature name="LittlePostman">
+        <param name="ios-package" value="LittlePostman" />
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <framework src="src/ios/LittlePostmanSDK.framework" custom="true" />
+
+    <source-file src="src/ios/LittlePostman.m" />
+    <source-file src="src/ios/AppDelegate+LPSupport.m" />
+
+    <header-file src="src/ios/LittlePostman.h" />
+    <header-file src="src/ios/AppDelegate+LPSupport.h" />
+  </platform>
+
+  <platform name="android">
+    <config-file parent="/*" target="res/xml/config.xml">
+      <feature name="LittlePostman">
+        <param name="android-package" value="com.littlepostman.cordova.plugin.LittlePostman" />
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+      <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+      <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+        <intent-filter>
+          <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+          <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+          <category android:name="$PACKAGE_NAME" />
+        </intent-filter>
+      </receiver>
+
+      <service android:name="$PACKAGE_NAME.GCMIntentService" />
+    </config-file>
+
+    <source-file src="src/android/littlepostman.xml" target-dir="assets/" />
+
+    <source-file src="src/android/gcm.jar" target-dir="libs/" />
+    <source-file src="src/android/LittlePostmanSDK.jar" target-dir="libs/" />
+
+    <source-file src="src/android/LittlePostman.java" target-dir="src/com/littlepostman/cordova/plugin" />
+    <source-file src="src/android/GCMIntentService.java" target-dir="src/com/littlepostman/cordova/plugin" />
+  </platform>
+</plugin>
